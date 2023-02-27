@@ -14,6 +14,7 @@ LICENSE_IGNORE := -e Package.swift \
     -e $(BIN)\/ \
     -e Examples/ElizaSharedSources/GeneratedSources\/ \
     -e Libraries/Connect/Implementation/Generated\/ \
+    -e Plugins/ConnectPluginGeneratedExtensions\/ \
     -e Tests/ConnectLibraryTests/proto/grpc\/ \
     -e Tests/ConnectLibraryTests/Generated\/
 
@@ -38,6 +39,7 @@ clean: cleangenerated ## Delete all plugins and generated outputs
 cleangenerated: ## Delete all generated outputs
 	rm -rf ./Examples/ElizaSharedSources/GeneratedSources/*
 	rm -rf ./Libraries/Connect/Implementation/Generated/*
+	rm -rf ./Plugins/ConnectPluginGeneratedExtensions/*
 	rm -rf ./Tests/ConnectLibraryTests/Generated/*
 
 .PHONY: crosstestserverstop
@@ -57,6 +59,7 @@ crosstestserverrun: crosstestserverstop ## Start the crosstest server
 generate: cleangenerated ## Regenerate outputs for all .proto files
 	cd Examples; buf generate
 	cd Libraries/Connect; buf generate
+	cd Plugins; buf generate
 	cd Tests/ConnectLibraryTests; buf generate
 
 .PHONY: help
