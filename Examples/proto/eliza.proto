@@ -14,9 +14,6 @@
 
 syntax = "proto3";
 
-import "annotations.proto";
-import "http.proto";
-
 package buf.connect.demo.eliza.v1;
 
 // ElizaService provides a way to talk to the ELIZA, which is a port of
@@ -28,11 +25,7 @@ package buf.connect.demo.eliza.v1;
 service ElizaService {
   // Say is a unary request demo. This method should allow for a one sentence
   // response given a one sentence request.
-  rpc Say(SayRequest) returns (SayResponse) {
-     option (google.api.http) = {
-          get: "/v1/SayRequest"
-      };
-  }
+  rpc Say(SayRequest) returns (SayResponse) {}
   // Converse is a bi-directional streaming request demo. This method should allow for
   // many requests and many responses.
   rpc Converse(stream ConverseRequest) returns (stream ConverseResponse) {}

@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package buf.vanguard;
+
+import "google/protobuf/descriptor.proto";
+
+message HttpOptions {
+    // Assigns an HTTP method and path to an RPC.
+    //
+    // The mapping supports URL path templates which are able to
+    // reference any primitive (string, int, etc.) fields in the request
+    // message.
+    //
+    // For example:
+    //
+    // rpc GetFoo(GetFooRequest) returns (GetFooResponse) {
+    //    option (buf.vanguard.http) = {
+    //        get: "/v1/foo/{foo_id}"
+    //    };
+    // }
+    //
+    // message GetFooRequest {
+    //     string foo_id = 1; // Mapped to `foo_id` in the RPC path
+    // }
+    oneof method {
+        // Maps to HTTP GET.
+        string get = 1;
+        // Maps to HTTP PUT.
+        string put = 2;
+        // Maps to HTTP POST.
+        string post = 3;
+        // Maps to HTTP DELETE.
+        string delete = 4;
+        // Maps to HTTP PATCH.
+        string patch = 5;
+        // A custom HTTP method not listed above.
+        CustomMethod custom_method = 6;
+    }
+
+    // If true, data is sent as a JSON body.
+    // If false, query parameters are used.
+    bool body_json = 7;
+
+    // The strategy to use for encoding repeated/array fields as
+    // query parameters.
+    ArrayEncodingStrategy array_encoding = 8;
+
+    // A custom HTTP method (e.g., `OPTIONS`).
+    message CustomMethod {
+        // The name of this custom HTTP method.
+        string kind = 1;
+        // The path to use with this custom method.
+        string path = 2;
+    }
+
+    enum ArrayEncodingStrategy {
+        // Encodes repeated fields as repeated query parameters. Example:
+        // `// ?foo=first&foo=second&foo=third&other=abc`
+        REPEATED = 0;
+        // Encodes repeated fields by separating values with commas. Example:
+        // `?foo=first,second,third&other=abc`
+        COMMA_SEPARATED = 1;
+    }
+}
+
+extend google.protobuf.MethodOptions {
+    HttpOptions http = 65295728;
+}
