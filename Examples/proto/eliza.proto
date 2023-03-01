@@ -16,6 +16,8 @@ syntax = "proto3";
 
 package buf.connect.demo.eliza.v1;
 
+import "buf/vanguard/annotations.proto";
+
 // ElizaService provides a way to talk to the ELIZA, which is a port of
 // the DOCTOR script for Joseph Weizenbaum's original ELIZA program.
 // Created in the mid-1960s at the MIT Artificial Intelligence Laboratory,
@@ -25,7 +27,11 @@ package buf.connect.demo.eliza.v1;
 service ElizaService {
   // Say is a unary request demo. This method should allow for a one sentence
   // response given a one sentence request.
-  rpc Say(SayRequest) returns (SayResponse) {}
+  rpc Say(SayRequest) returns (SayResponse) {
+    option (buf.vanguard.http) = {
+        get: "/v1/foo/{foo_id}"
+    };
+  }
   // Converse is a bi-directional streaming request demo. This method should allow for
   // many requests and many responses.
   rpc Converse(stream ConverseRequest) returns (stream ConverseResponse) {}
@@ -37,6 +43,7 @@ service ElizaService {
 // SayRequest describes the sentence said to the ELIZA program.
 message SayRequest {
   string sentence = 1;
+  string foo_id = 2;
 }
 
 // SayResponse describes the sentence responded by the ELIZA program.

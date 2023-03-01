@@ -115,38 +115,38 @@ internal final class Grpc_Testing_TestServiceClient: Grpc_Testing_TestServiceCli
 
     @discardableResult
     internal func `emptyCall`(request: Grpc_Testing_Empty, headers: Connect.Headers = [:], completion: @escaping (ResponseMessage<Grpc_Testing_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "grpc.testing.TestService/EmptyCall", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "grpc.testing.TestService/EmptyCall", request: request, method: "POST", headers: headers, completion: completion)
     }
 
     internal func `emptyCall`(request: Grpc_Testing_Empty, headers: Connect.Headers = [:]) async -> ResponseMessage<Grpc_Testing_Empty> {
-        return await self.client.unary(path: "grpc.testing.TestService/EmptyCall", request: request, headers: headers)
+        return await self.client.unary(path: "grpc.testing.TestService/EmptyCall", request: request, method: "POST", headers: headers)
     }
 
     @discardableResult
     internal func `unaryCall`(request: Grpc_Testing_SimpleRequest, headers: Connect.Headers = [:], completion: @escaping (ResponseMessage<Grpc_Testing_SimpleResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "grpc.testing.TestService/UnaryCall", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "grpc.testing.TestService/UnaryCall", request: request, method: "POST", headers: headers, completion: completion)
     }
 
     internal func `unaryCall`(request: Grpc_Testing_SimpleRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Grpc_Testing_SimpleResponse> {
-        return await self.client.unary(path: "grpc.testing.TestService/UnaryCall", request: request, headers: headers)
+        return await self.client.unary(path: "grpc.testing.TestService/UnaryCall", request: request, method: "POST", headers: headers)
     }
 
     @discardableResult
     internal func `failUnaryCall`(request: Grpc_Testing_SimpleRequest, headers: Connect.Headers = [:], completion: @escaping (ResponseMessage<Grpc_Testing_SimpleResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "grpc.testing.TestService/FailUnaryCall", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "grpc.testing.TestService/FailUnaryCall", request: request, method: "POST", headers: headers, completion: completion)
     }
 
     internal func `failUnaryCall`(request: Grpc_Testing_SimpleRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Grpc_Testing_SimpleResponse> {
-        return await self.client.unary(path: "grpc.testing.TestService/FailUnaryCall", request: request, headers: headers)
+        return await self.client.unary(path: "grpc.testing.TestService/FailUnaryCall", request: request, method: "POST", headers: headers)
     }
 
     @discardableResult
     internal func `cacheableUnaryCall`(request: Grpc_Testing_SimpleRequest, headers: Connect.Headers = [:], completion: @escaping (ResponseMessage<Grpc_Testing_SimpleResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "grpc.testing.TestService/CacheableUnaryCall", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "grpc.testing.TestService/CacheableUnaryCall", request: request, method: "POST", headers: headers, completion: completion)
     }
 
     internal func `cacheableUnaryCall`(request: Grpc_Testing_SimpleRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Grpc_Testing_SimpleResponse> {
-        return await self.client.unary(path: "grpc.testing.TestService/CacheableUnaryCall", request: request, headers: headers)
+        return await self.client.unary(path: "grpc.testing.TestService/CacheableUnaryCall", request: request, method: "POST", headers: headers)
     }
 
     internal func `streamingOutputCall`(headers: Connect.Headers = [:], onResult: @escaping (Connect.StreamResult<Grpc_Testing_StreamingOutputCallResponse>) -> Void) -> any Connect.ServerOnlyStreamInterface<Grpc_Testing_StreamingOutputCallRequest> {
@@ -191,11 +191,11 @@ internal final class Grpc_Testing_TestServiceClient: Grpc_Testing_TestServiceCli
 
     @discardableResult
     internal func `unimplementedCall`(request: Grpc_Testing_Empty, headers: Connect.Headers = [:], completion: @escaping (ResponseMessage<Grpc_Testing_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "grpc.testing.TestService/UnimplementedCall", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "grpc.testing.TestService/UnimplementedCall", request: request, method: "POST", headers: headers, completion: completion)
     }
 
     internal func `unimplementedCall`(request: Grpc_Testing_Empty, headers: Connect.Headers = [:]) async -> ResponseMessage<Grpc_Testing_Empty> {
-        return await self.client.unary(path: "grpc.testing.TestService/UnimplementedCall", request: request, headers: headers)
+        return await self.client.unary(path: "grpc.testing.TestService/UnimplementedCall", request: request, method: "POST", headers: headers)
     }
 
     internal func `unimplementedStreamingOutputCall`(headers: Connect.Headers = [:], onResult: @escaping (Connect.StreamResult<Grpc_Testing_Empty>) -> Void) -> any Connect.ServerOnlyStreamInterface<Grpc_Testing_Empty> {
@@ -251,11 +251,11 @@ internal final class Grpc_Testing_UnimplementedServiceClient: Grpc_Testing_Unimp
 
     @discardableResult
     internal func `unimplementedCall`(request: Grpc_Testing_Empty, headers: Connect.Headers = [:], completion: @escaping (ResponseMessage<Grpc_Testing_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "grpc.testing.UnimplementedService/UnimplementedCall", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "grpc.testing.UnimplementedService/UnimplementedCall", request: request, method: "POST", headers: headers, completion: completion)
     }
 
     internal func `unimplementedCall`(request: Grpc_Testing_Empty, headers: Connect.Headers = [:]) async -> ResponseMessage<Grpc_Testing_Empty> {
-        return await self.client.unary(path: "grpc.testing.UnimplementedService/UnimplementedCall", request: request, headers: headers)
+        return await self.client.unary(path: "grpc.testing.UnimplementedService/UnimplementedCall", request: request, method: "POST", headers: headers)
     }
 
     internal func `unimplementedStreamingOutputCall`(headers: Connect.Headers = [:], onResult: @escaping (Connect.StreamResult<Grpc_Testing_Empty>) -> Void) -> any Connect.ServerOnlyStreamInterface<Grpc_Testing_Empty> {
@@ -298,20 +298,20 @@ internal final class Grpc_Testing_ReconnectServiceClient: Grpc_Testing_Reconnect
 
     @discardableResult
     internal func `start`(request: Grpc_Testing_ReconnectParams, headers: Connect.Headers = [:], completion: @escaping (ResponseMessage<Grpc_Testing_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "grpc.testing.ReconnectService/Start", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "grpc.testing.ReconnectService/Start", request: request, method: "POST", headers: headers, completion: completion)
     }
 
     internal func `start`(request: Grpc_Testing_ReconnectParams, headers: Connect.Headers = [:]) async -> ResponseMessage<Grpc_Testing_Empty> {
-        return await self.client.unary(path: "grpc.testing.ReconnectService/Start", request: request, headers: headers)
+        return await self.client.unary(path: "grpc.testing.ReconnectService/Start", request: request, method: "POST", headers: headers)
     }
 
     @discardableResult
     internal func `stop`(request: Grpc_Testing_Empty, headers: Connect.Headers = [:], completion: @escaping (ResponseMessage<Grpc_Testing_ReconnectInfo>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "grpc.testing.ReconnectService/Stop", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "grpc.testing.ReconnectService/Stop", request: request, method: "POST", headers: headers, completion: completion)
     }
 
     internal func `stop`(request: Grpc_Testing_Empty, headers: Connect.Headers = [:]) async -> ResponseMessage<Grpc_Testing_ReconnectInfo> {
-        return await self.client.unary(path: "grpc.testing.ReconnectService/Stop", request: request, headers: headers)
+        return await self.client.unary(path: "grpc.testing.ReconnectService/Stop", request: request, method: "POST", headers: headers)
     }
 
     internal enum Metadata {
@@ -350,20 +350,20 @@ internal final class Grpc_Testing_LoadBalancerStatsServiceClient: Grpc_Testing_L
 
     @discardableResult
     internal func `getClientStats`(request: Grpc_Testing_LoadBalancerStatsRequest, headers: Connect.Headers = [:], completion: @escaping (ResponseMessage<Grpc_Testing_LoadBalancerStatsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "grpc.testing.LoadBalancerStatsService/GetClientStats", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "grpc.testing.LoadBalancerStatsService/GetClientStats", request: request, method: "POST", headers: headers, completion: completion)
     }
 
     internal func `getClientStats`(request: Grpc_Testing_LoadBalancerStatsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Grpc_Testing_LoadBalancerStatsResponse> {
-        return await self.client.unary(path: "grpc.testing.LoadBalancerStatsService/GetClientStats", request: request, headers: headers)
+        return await self.client.unary(path: "grpc.testing.LoadBalancerStatsService/GetClientStats", request: request, method: "POST", headers: headers)
     }
 
     @discardableResult
     internal func `getClientAccumulatedStats`(request: Grpc_Testing_LoadBalancerAccumulatedStatsRequest, headers: Connect.Headers = [:], completion: @escaping (ResponseMessage<Grpc_Testing_LoadBalancerAccumulatedStatsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "grpc.testing.LoadBalancerStatsService/GetClientAccumulatedStats", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "grpc.testing.LoadBalancerStatsService/GetClientAccumulatedStats", request: request, method: "POST", headers: headers, completion: completion)
     }
 
     internal func `getClientAccumulatedStats`(request: Grpc_Testing_LoadBalancerAccumulatedStatsRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Grpc_Testing_LoadBalancerAccumulatedStatsResponse> {
-        return await self.client.unary(path: "grpc.testing.LoadBalancerStatsService/GetClientAccumulatedStats", request: request, headers: headers)
+        return await self.client.unary(path: "grpc.testing.LoadBalancerStatsService/GetClientAccumulatedStats", request: request, method: "POST", headers: headers)
     }
 
     internal enum Metadata {
@@ -398,20 +398,20 @@ internal final class Grpc_Testing_XdsUpdateHealthServiceClient: Grpc_Testing_Xds
 
     @discardableResult
     internal func `setServing`(request: Grpc_Testing_Empty, headers: Connect.Headers = [:], completion: @escaping (ResponseMessage<Grpc_Testing_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "grpc.testing.XdsUpdateHealthService/SetServing", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "grpc.testing.XdsUpdateHealthService/SetServing", request: request, method: "POST", headers: headers, completion: completion)
     }
 
     internal func `setServing`(request: Grpc_Testing_Empty, headers: Connect.Headers = [:]) async -> ResponseMessage<Grpc_Testing_Empty> {
-        return await self.client.unary(path: "grpc.testing.XdsUpdateHealthService/SetServing", request: request, headers: headers)
+        return await self.client.unary(path: "grpc.testing.XdsUpdateHealthService/SetServing", request: request, method: "POST", headers: headers)
     }
 
     @discardableResult
     internal func `setNotServing`(request: Grpc_Testing_Empty, headers: Connect.Headers = [:], completion: @escaping (ResponseMessage<Grpc_Testing_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "grpc.testing.XdsUpdateHealthService/SetNotServing", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "grpc.testing.XdsUpdateHealthService/SetNotServing", request: request, method: "POST", headers: headers, completion: completion)
     }
 
     internal func `setNotServing`(request: Grpc_Testing_Empty, headers: Connect.Headers = [:]) async -> ResponseMessage<Grpc_Testing_Empty> {
-        return await self.client.unary(path: "grpc.testing.XdsUpdateHealthService/SetNotServing", request: request, headers: headers)
+        return await self.client.unary(path: "grpc.testing.XdsUpdateHealthService/SetNotServing", request: request, method: "POST", headers: headers)
     }
 
     internal enum Metadata {
@@ -443,11 +443,11 @@ internal final class Grpc_Testing_XdsUpdateClientConfigureServiceClient: Grpc_Te
 
     @discardableResult
     internal func `configure`(request: Grpc_Testing_ClientConfigureRequest, headers: Connect.Headers = [:], completion: @escaping (ResponseMessage<Grpc_Testing_ClientConfigureResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "grpc.testing.XdsUpdateClientConfigureService/Configure", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "grpc.testing.XdsUpdateClientConfigureService/Configure", request: request, method: "POST", headers: headers, completion: completion)
     }
 
     internal func `configure`(request: Grpc_Testing_ClientConfigureRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Grpc_Testing_ClientConfigureResponse> {
-        return await self.client.unary(path: "grpc.testing.XdsUpdateClientConfigureService/Configure", request: request, headers: headers)
+        return await self.client.unary(path: "grpc.testing.XdsUpdateClientConfigureService/Configure", request: request, method: "POST", headers: headers)
     }
 
     internal enum Metadata {

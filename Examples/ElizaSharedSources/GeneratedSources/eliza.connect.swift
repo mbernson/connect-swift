@@ -37,7 +37,7 @@ internal final class Buf_Connect_Demo_Eliza_V1_ElizaServiceClient: Buf_Connect_D
     }
 
     internal func `say`(request: Buf_Connect_Demo_Eliza_V1_SayRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Buf_Connect_Demo_Eliza_V1_SayResponse> {
-        return await self.client.unary(path: "buf.connect.demo.eliza.v1.ElizaService/Say", request: request, headers: headers)
+        return await self.client.unary(path: "/v1/foo/\(request.`fooID)`", request: request, method: "GET", headers: headers)
     }
 
     internal func `converse`(headers: Connect.Headers = [:]) -> any Connect.BidirectionalAsyncStreamInterface<Buf_Connect_Demo_Eliza_V1_ConverseRequest, Buf_Connect_Demo_Eliza_V1_ConverseResponse> {

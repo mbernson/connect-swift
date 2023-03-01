@@ -21,7 +21,7 @@ final class ConnectMockGenerator: Generator {
     private let propertyVisibility: String
     private let typeVisibility: String
 
-    required init(_ descriptor: FileDescriptor, options: GeneratorOptions) {
+    required init(_ descriptor: FileDescriptor, options: GeneratorOptions) throws {
         switch options.visibility {
         case .internal:
             self.propertyVisibility = "internal"
@@ -30,7 +30,7 @@ final class ConnectMockGenerator: Generator {
             self.propertyVisibility = "public"
             self.typeVisibility = "open"
         }
-        super.init(descriptor, options: options)
+        try super.init(descriptor, options: options)
         self.printContent()
     }
 

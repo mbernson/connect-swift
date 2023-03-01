@@ -20,30 +20,29 @@ import SwiftProtobufPluginLibrary
 final class ConnectClientGenerator: Generator {
     private let visibility: String
 
-    required init(_ descriptor: FileDescriptor, options: GeneratorOptions) {
+    required init(_ descriptor: FileDescriptor, options: GeneratorOptions) throws {
         switch options.visibility {
         case .internal:
             self.visibility = "internal"
         case .public:
             self.visibility = "public"
         }
-        super.init(descriptor, options: options)
-
-        self.printContent()
+        try super.init(descriptor, options: options)
+        try self.printContent()
     }
 
-    private func printContent() {
+    private func printContent() throws {
         self.printFilePreamble()
 
         self.printModuleImports()
 
         for service in self.descriptor.services {
             self.printLine()
-            self.printService(service)
+            try self.printService(service)
         }
     }
 
-    private func printService(_ service: ServiceDescriptor) {
+    private func printService(_ service: ServiceDescriptor) throws {
         self.printCommentsIfNeeded(for: service)
 
         let protocolName = service.protocolName(using: self.namer)
@@ -65,7 +64,7 @@ final class ConnectClientGenerator: Generator {
         let className = service.implementationName(using: self.namer)
         self.printLine("/// Concrete implementation of `\(protocolName)`.")
         self.printLine("\(self.visibility) final class \(className): \(protocolName) {")
-        self.indent {
+        try self.indent {
             self.printLine("private let client: Connect.ProtocolClientInterface")
             self.printLine()
             self.printLine("\(self.visibility) init(client: Connect.ProtocolClientInterface) {")
@@ -75,11 +74,18 @@ final class ConnectClientGenerator: Generator {
             self.printLine("}")
 
             for method in service.methods {
+                let vanguardResolver = VanguardResolver(
+                    descriptor: method, namer: self.namer, inputVariableName: "request"
+                )
                 if self.options.generateCallbackMethods {
-                    self.printCallbackMethodImplementation(for: method)
+                    try self.printCallbackMethodImplementation(
+                        for: method, vanguardResolver: vanguardResolver
+                    )
                 }
                 if self.options.generateAsyncMethods {
-                    self.printAsyncAwaitMethodImplementation(for: method)
+                    try self.printAsyncAwaitMethodImplementation(
+                        for: method, vanguardResolver: vanguardResolver
+                    )
                 }
             }
 
@@ -138,7 +144,9 @@ final class ConnectClientGenerator: Generator {
         )
     }
 
-    private func printCallbackMethodImplementation(for method: MethodDescriptor) {
+    private func printCallbackMethodImplementation(
+        for method: MethodDescriptor, vanguardResolver: VanguardResolver
+    ) throws {
         self.printLine()
         if !method.serverStreaming && !method.clientStreaming {
             self.printLine("@discardableResult")
@@ -151,13 +159,15 @@ final class ConnectClientGenerator: Generator {
             )
             + " {"
         )
-        self.indent {
-            self.printLine("return \(method.callbackReturnValue())")
+        try self.indent {
+            try self.printLine("return \(method.callbackReturnValue(using: vanguardResolver))")
         }
         self.printLine("}")
     }
 
-    private func printAsyncAwaitMethodImplementation(for method: MethodDescriptor) {
+    private func printAsyncAwaitMethodImplementation(
+        for method: MethodDescriptor, vanguardResolver: VanguardResolver
+    ) throws {
         self.printLine()
         self.printLine(
             "\(self.visibility) "
@@ -166,15 +176,15 @@ final class ConnectClientGenerator: Generator {
             )
             + " {"
         )
-        self.indent {
-            self.printLine("return \(method.asyncAwaitReturnValue())")
+        try self.indent {
+            try self.printLine("return \(method.asyncAwaitReturnValue(using: vanguardResolver))")
         }
         self.printLine("}")
     }
 }
 
 private extension MethodDescriptor {
-    func specStreamType() -> String {
+     func specStreamType() -> String {
         if self.clientStreaming && self.serverStreaming {
             return ".bidirectionalStream"
         } else if self.serverStreaming {
@@ -186,46 +196,51 @@ private extension MethodDescriptor {
         }
     }
 
-    func callbackReturnValue() -> String {
+    func callbackReturnValue(using vanguardResolver: VanguardResolver) throws -> String {
+        let methodInfo = try vanguardResolver.methodInfo()
         if self.clientStreaming && self.serverStreaming {
             return """
             self.client.bidirectionalStream(\
-            path: "\(self.methodPath)", headers: headers, onResult: onResult)
+            path: "\(methodInfo.httpPath)", headers: headers, onResult: onResult)
             """
         } else if self.serverStreaming {
             return """
             self.client.serverOnlyStream(\
-            path: "\(self.methodPath)", headers: headers, onResult: onResult)
+            path: "\(methodInfo.httpPath)", headers: headers, onResult: onResult)
             """
         } else if self.clientStreaming {
             return """
             self.client.clientOnlyStream(\
-            path: "\(self.methodPath)", headers: headers, onResult: onResult)
+            path: "\(methodInfo.httpPath)", headers: headers, onResult: onResult)
             """
         } else {
             return """
             self.client.unary(\
-            path: "\(self.methodPath)", request: request, headers: headers, completion: completion)
+            path: "\(methodInfo.httpPath)", request: request, \
+            method: "\(methodInfo.httpMethod)", headers: headers, completion: completion)
             """
         }
     }
 
-    func asyncAwaitReturnValue() -> String {
+    func asyncAwaitReturnValue(using vanguardResolver: VanguardResolver) throws -> String {
+        let methodInfo = try vanguardResolver.methodInfo()
         if self.clientStreaming && self.serverStreaming {
             return """
-            self.client.bidirectionalStream(path: "\(self.methodPath)", headers: headers)
+            self.client.bidirectionalStream(path: "\(methodInfo.httpPath)", headers: headers)
             """
         } else if self.serverStreaming {
             return """
-            self.client.serverOnlyStream(path: "\(self.methodPath)", headers: headers)
+            self.client.serverOnlyStream(path: "\(methodInfo.httpPath)", headers: headers)
             """
         } else if self.clientStreaming {
             return """
-            self.client.clientOnlyStream(path: "\(self.methodPath)", headers: headers)
+            self.client.clientOnlyStream(path: "\(methodInfo.httpPath)", headers: headers)
             """
         } else {
             return """
-            await self.client.unary(path: "\(self.methodPath)", request: request, headers: headers)
+            await self.client.unary(\
+            path: "\(methodInfo.httpPath)", request: request, \
+            method: "\(methodInfo.httpMethod)", headers: headers)
             """
         }
     }

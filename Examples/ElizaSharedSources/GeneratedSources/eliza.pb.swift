@@ -42,6 +42,8 @@ struct Buf_Connect_Demo_Eliza_V1_SayRequest {
 
   var sentence: String = String()
 
+  var fooID: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -129,6 +131,7 @@ extension Buf_Connect_Demo_Eliza_V1_SayRequest: SwiftProtobuf.Message, SwiftProt
   static let protoMessageName: String = _protobuf_package + ".SayRequest"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "sentence"),
+    2: .standard(proto: "foo_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -138,6 +141,7 @@ extension Buf_Connect_Demo_Eliza_V1_SayRequest: SwiftProtobuf.Message, SwiftProt
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.sentence) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.fooID) }()
       default: break
       }
     }
@@ -147,11 +151,15 @@ extension Buf_Connect_Demo_Eliza_V1_SayRequest: SwiftProtobuf.Message, SwiftProt
     if !self.sentence.isEmpty {
       try visitor.visitSingularStringField(value: self.sentence, fieldNumber: 1)
     }
+    if !self.fooID.isEmpty {
+      try visitor.visitSingularStringField(value: self.fooID, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Buf_Connect_Demo_Eliza_V1_SayRequest, rhs: Buf_Connect_Demo_Eliza_V1_SayRequest) -> Bool {
     if lhs.sentence != rhs.sentence {return false}
+    if lhs.fooID != rhs.fooID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

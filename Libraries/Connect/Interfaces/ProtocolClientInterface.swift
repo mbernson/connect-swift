@@ -24,6 +24,7 @@ public protocol ProtocolClientInterface {
     /// Perform a unary (non-streaming) request.
     ///
     /// - parameter path: The RPC path, e.g., "buf.connect.demo.eliza.v1.ElizaService/Say".
+    /// - parameter method: The HTTP method to use (e.g., "POST", "GET", etc.).
     /// - parameter request: The outbound request message.
     /// - parameter headers: The outbound request headers to include.
     /// - parameter completion: Closure called when a response or error is received.
@@ -34,6 +35,7 @@ public protocol ProtocolClientInterface {
         Input: SwiftProtobuf.Message, Output: SwiftProtobuf.Message
     >(
         path: String,
+        method: String,
         request: Input,
         headers: Headers,
         completion: @escaping (ResponseMessage<Output>) -> Void
@@ -110,6 +112,7 @@ public protocol ProtocolClientInterface {
     /// Perform a unary (non-streaming) request.
     ///
     /// - parameter path: The RPC path, e.g., "buf.connect.demo.eliza.v1.ElizaService/Say".
+    /// - parameter method: The HTTP method to use (e.g., "POST", "GET", etc.).
     /// - parameter request: The outbound request message.
     /// - parameter headers: The outbound request headers to include.
     ///
@@ -118,6 +121,7 @@ public protocol ProtocolClientInterface {
         Input: SwiftProtobuf.Message, Output: SwiftProtobuf.Message
     >(
         path: String,
+        method: String,
         request: Input,
         headers: Headers
     ) async -> ResponseMessage<Output>

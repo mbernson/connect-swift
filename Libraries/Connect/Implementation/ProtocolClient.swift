@@ -42,6 +42,7 @@ extension ProtocolClient: ProtocolClientInterface {
         Input: SwiftProtobuf.Message, Output: SwiftProtobuf.Message
     >(
         path: String,
+        method: String,
         request: Input,
         headers: Headers,
         completion: @escaping (ResponseMessage<Output>) -> Void
@@ -61,6 +62,7 @@ extension ProtocolClient: ProtocolClientInterface {
             return Cancelable(cancel: {})
         }
 
+        #warning("todo - handle vanilla http")
         let chain = self.config.createInterceptorChain().unaryFunction()
         let url = URL(string: path, relativeTo: URL(string: self.config.host))!
         let request = chain.requestFunction(HTTPRequest(
@@ -165,11 +167,15 @@ extension ProtocolClient: ProtocolClientInterface {
         Input: SwiftProtobuf.Message, Output: SwiftProtobuf.Message
     >(
         path: String,
+        method: String,
         request: Input,
         headers: Headers
     ) async -> ResponseMessage<Output> {
         return await UnaryAsyncWrapper { completion in
-            self.unary(path: path, request: request, headers: headers, completion: completion)
+            self.unary(
+                path: path, method: method, request: request,
+                headers: headers, completion: completion
+            )
         }.send()
     }
 

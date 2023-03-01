@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import Foundation
+import ConnectPluginGeneratedExtensions
 import SwiftProtobufPluginLibrary
 
 private struct GeneratorError: Swift.Error {
@@ -37,7 +38,8 @@ public final class MainGeneratorFunction {
                 supportedFeatures: [.proto3Optional]
             )
             let request = try Google_Protobuf_Compiler_CodeGeneratorRequest(
-                serializedData: FileHandle.standardInput.readDataToEndOfFile()
+                serializedData: FileHandle.standardInput.readDataToEndOfFile(),
+                extensions: Buf_Vanguard_Annotations_Extensions
             )
             let descriptors = DescriptorSet(protos: request.protoFile)
             let options = try GeneratorOptions(commandLineParameters: request.parameter)
@@ -57,13 +59,12 @@ public final class MainGeneratorFunction {
                     continue
                 }
 
+                let fileContent = try self.generatorType.init(descriptor, options: options).output
                 response.file.append(.with { outputFile in
                     outputFile.name = FilePathComponents(path: descriptor.name).outputFilePath(
                         withExtension: self.outputFileExtension, using: options.fileNaming
                     )
-                    outputFile.content = self.generatorType.init(
-                        descriptor, options: options
-                    ).output
+                    outputFile.content = fileContent
                 })
             }
             FileHandle.standardOutput.write(try response.serializedData())

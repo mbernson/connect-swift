@@ -20,7 +20,7 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-public struct Buf_Vanguard_HttpOptions {
+struct Buf_Vanguard_HttpOptions {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -42,10 +42,10 @@ public struct Buf_Vanguard_HttpOptions {
   /// message GetFooRequest {
   ///     string foo_id = 1; // Mapped to `foo_id` in the RPC path
   /// }
-  public var method: Buf_Vanguard_HttpOptions.OneOf_Method? = nil
+  var method: Buf_Vanguard_HttpOptions.OneOf_Method? = nil
 
   /// Maps to HTTP GET.
-  public var get: String {
+  var get: String {
     get {
       if case .get(let v)? = method {return v}
       return String()
@@ -54,7 +54,7 @@ public struct Buf_Vanguard_HttpOptions {
   }
 
   /// Maps to HTTP PUT.
-  public var put: String {
+  var put: String {
     get {
       if case .put(let v)? = method {return v}
       return String()
@@ -63,7 +63,7 @@ public struct Buf_Vanguard_HttpOptions {
   }
 
   /// Maps to HTTP POST.
-  public var post: String {
+  var post: String {
     get {
       if case .post(let v)? = method {return v}
       return String()
@@ -72,7 +72,7 @@ public struct Buf_Vanguard_HttpOptions {
   }
 
   /// Maps to HTTP DELETE.
-  public var delete: String {
+  var delete: String {
     get {
       if case .delete(let v)? = method {return v}
       return String()
@@ -81,7 +81,7 @@ public struct Buf_Vanguard_HttpOptions {
   }
 
   /// Maps to HTTP PATCH.
-  public var patch: String {
+  var patch: String {
     get {
       if case .patch(let v)? = method {return v}
       return String()
@@ -90,7 +90,7 @@ public struct Buf_Vanguard_HttpOptions {
   }
 
   /// A custom HTTP method not listed above.
-  public var customMethod: Buf_Vanguard_HttpOptions.CustomMethod {
+  var customMethod: Buf_Vanguard_HttpOptions.CustomMethod {
     get {
       if case .customMethod(let v)? = method {return v}
       return Buf_Vanguard_HttpOptions.CustomMethod()
@@ -100,13 +100,13 @@ public struct Buf_Vanguard_HttpOptions {
 
   /// If true, data is sent as a JSON body.
   /// If false, query parameters are used.
-  public var bodyJson: Bool = false
+  var bodyJson: Bool = false
 
   /// The strategy to use for encoding repeated/array fields as
   /// query parameters.
-  public var arrayEncoding: Buf_Vanguard_HttpOptions.ArrayEncodingStrategy = .repeated
+  var arrayEncoding: Buf_Vanguard_HttpOptions.ArrayEncodingStrategy = .repeated
 
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
+  var unknownFields = SwiftProtobuf.UnknownStorage()
 
   /// Assigns an HTTP method and path to an RPC.
   ///
@@ -125,7 +125,7 @@ public struct Buf_Vanguard_HttpOptions {
   /// message GetFooRequest {
   ///     string foo_id = 1; // Mapped to `foo_id` in the RPC path
   /// }
-  public enum OneOf_Method: Equatable {
+  enum OneOf_Method: Equatable {
     /// Maps to HTTP GET.
     case get(String)
     /// Maps to HTTP PUT.
@@ -140,7 +140,7 @@ public struct Buf_Vanguard_HttpOptions {
     case customMethod(Buf_Vanguard_HttpOptions.CustomMethod)
 
   #if !swift(>=4.1)
-    public static func ==(lhs: Buf_Vanguard_HttpOptions.OneOf_Method, rhs: Buf_Vanguard_HttpOptions.OneOf_Method) -> Bool {
+    static func ==(lhs: Buf_Vanguard_HttpOptions.OneOf_Method, rhs: Buf_Vanguard_HttpOptions.OneOf_Method) -> Bool {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
@@ -175,8 +175,8 @@ public struct Buf_Vanguard_HttpOptions {
   #endif
   }
 
-  public enum ArrayEncodingStrategy: SwiftProtobuf.Enum {
-    public typealias RawValue = Int
+  enum ArrayEncodingStrategy: SwiftProtobuf.Enum {
+    typealias RawValue = Int
 
     /// Encodes repeated fields as repeated query parameters. Example:
     /// `// ?foo=first&foo=second&foo=third&other=abc`
@@ -187,11 +187,11 @@ public struct Buf_Vanguard_HttpOptions {
     case commaSeparated // = 1
     case UNRECOGNIZED(Int)
 
-    public init() {
+    init() {
       self = .repeated
     }
 
-    public init?(rawValue: Int) {
+    init?(rawValue: Int) {
       switch rawValue {
       case 0: self = .repeated
       case 1: self = .commaSeparated
@@ -199,7 +199,7 @@ public struct Buf_Vanguard_HttpOptions {
       }
     }
 
-    public var rawValue: Int {
+    var rawValue: Int {
       switch self {
       case .repeated: return 0
       case .commaSeparated: return 1
@@ -210,30 +210,30 @@ public struct Buf_Vanguard_HttpOptions {
   }
 
   /// A custom HTTP method (e.g., `OPTIONS`).
-  public struct CustomMethod {
+  struct CustomMethod {
     // SwiftProtobuf.Message conformance is added in an extension below. See the
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
 
     /// The name of this custom HTTP method.
-    public var kind: String = String()
+    var kind: String = String()
 
     /// The path to use with this custom method.
-    public var path: String = String()
+    var path: String = String()
 
-    public var unknownFields = SwiftProtobuf.UnknownStorage()
+    var unknownFields = SwiftProtobuf.UnknownStorage()
 
-    public init() {}
+    init() {}
   }
 
-  public init() {}
+  init() {}
 }
 
 #if swift(>=4.2)
 
 extension Buf_Vanguard_HttpOptions.ArrayEncodingStrategy: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
-  public static var allCases: [Buf_Vanguard_HttpOptions.ArrayEncodingStrategy] = [
+  static var allCases: [Buf_Vanguard_HttpOptions.ArrayEncodingStrategy] = [
     .repeated,
     .commaSeparated,
   ]
@@ -259,18 +259,18 @@ extension Buf_Vanguard_HttpOptions.CustomMethod: @unchecked Sendable {}
 
 extension SwiftProtobuf.Google_Protobuf_MethodOptions {
 
-  public var Buf_Vanguard_http: Buf_Vanguard_HttpOptions {
+  var Buf_Vanguard_http: Buf_Vanguard_HttpOptions {
     get {return getExtensionValue(ext: Buf_Vanguard_Extensions_http) ?? Buf_Vanguard_HttpOptions()}
     set {setExtensionValue(ext: Buf_Vanguard_Extensions_http, value: newValue)}
   }
   /// Returns true if extension `Buf_Vanguard_Extensions_http`
   /// has been explicitly set.
-  public var hasBuf_Vanguard_http: Bool {
+  var hasBuf_Vanguard_http: Bool {
     return hasExtensionValue(ext: Buf_Vanguard_Extensions_http)
   }
   /// Clears the value of extension `Buf_Vanguard_Extensions_http`.
   /// Subsequent reads from it will return its default value.
-  public mutating func clearBuf_Vanguard_http() {
+  mutating func clearBuf_Vanguard_http() {
     clearExtensionValue(ext: Buf_Vanguard_Extensions_http)
   }
 
@@ -282,7 +282,7 @@ extension SwiftProtobuf.Google_Protobuf_MethodOptions {
 /// this .proto file. It can be used any place an `SwiftProtobuf.ExtensionMap` is needed
 /// in parsing, or it can be combined with other `SwiftProtobuf.SimpleExtensionMap`s to create
 /// a larger `SwiftProtobuf.SimpleExtensionMap`.
-public let Buf_Vanguard_Annotations_Extensions: SwiftProtobuf.SimpleExtensionMap = [
+let Buf_Vanguard_Annotations_Extensions: SwiftProtobuf.SimpleExtensionMap = [
   Buf_Vanguard_Extensions_http
 ]
 
@@ -290,7 +290,7 @@ public let Buf_Vanguard_Annotations_Extensions: SwiftProtobuf.SimpleExtensionMap
 // constructing a `SimpleExtensionMap`, otherwise, use the above _Extension Properties_
 // accessors for the extension fields on the messages directly.
 
-public let Buf_Vanguard_Extensions_http = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<Buf_Vanguard_HttpOptions>, SwiftProtobuf.Google_Protobuf_MethodOptions>(
+let Buf_Vanguard_Extensions_http = SwiftProtobuf.MessageExtension<SwiftProtobuf.OptionalMessageExtensionField<Buf_Vanguard_HttpOptions>, SwiftProtobuf.Google_Protobuf_MethodOptions>(
   _protobuf_fieldNumber: 10001,
   fieldName: "buf.vanguard.http"
 )
@@ -300,8 +300,8 @@ public let Buf_Vanguard_Extensions_http = SwiftProtobuf.MessageExtension<SwiftPr
 fileprivate let _protobuf_package = "buf.vanguard"
 
 extension Buf_Vanguard_HttpOptions: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".HttpOptions"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  static let protoMessageName: String = _protobuf_package + ".HttpOptions"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "get"),
     2: .same(proto: "put"),
     3: .same(proto: "post"),
@@ -312,7 +312,7 @@ extension Buf_Vanguard_HttpOptions: SwiftProtobuf.Message, SwiftProtobuf._Messag
     8: .standard(proto: "array_encoding"),
   ]
 
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -378,7 +378,7 @@ extension Buf_Vanguard_HttpOptions: SwiftProtobuf.Message, SwiftProtobuf._Messag
     }
   }
 
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     // The use of inline closures is to circumvent an issue where the compiler
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
@@ -419,7 +419,7 @@ extension Buf_Vanguard_HttpOptions: SwiftProtobuf.Message, SwiftProtobuf._Messag
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: Buf_Vanguard_HttpOptions, rhs: Buf_Vanguard_HttpOptions) -> Bool {
+  static func ==(lhs: Buf_Vanguard_HttpOptions, rhs: Buf_Vanguard_HttpOptions) -> Bool {
     if lhs.method != rhs.method {return false}
     if lhs.bodyJson != rhs.bodyJson {return false}
     if lhs.arrayEncoding != rhs.arrayEncoding {return false}
@@ -429,20 +429,20 @@ extension Buf_Vanguard_HttpOptions: SwiftProtobuf.Message, SwiftProtobuf._Messag
 }
 
 extension Buf_Vanguard_HttpOptions.ArrayEncodingStrategy: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "REPEATED"),
     1: .same(proto: "COMMA_SEPARATED"),
   ]
 }
 
 extension Buf_Vanguard_HttpOptions.CustomMethod: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = Buf_Vanguard_HttpOptions.protoMessageName + ".CustomMethod"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+  static let protoMessageName: String = Buf_Vanguard_HttpOptions.protoMessageName + ".CustomMethod"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "kind"),
     2: .same(proto: "path"),
   ]
 
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
@@ -455,7 +455,7 @@ extension Buf_Vanguard_HttpOptions.CustomMethod: SwiftProtobuf.Message, SwiftPro
     }
   }
 
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.kind.isEmpty {
       try visitor.visitSingularStringField(value: self.kind, fieldNumber: 1)
     }
@@ -465,7 +465,7 @@ extension Buf_Vanguard_HttpOptions.CustomMethod: SwiftProtobuf.Message, SwiftPro
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: Buf_Vanguard_HttpOptions.CustomMethod, rhs: Buf_Vanguard_HttpOptions.CustomMethod) -> Bool {
+  static func ==(lhs: Buf_Vanguard_HttpOptions.CustomMethod, rhs: Buf_Vanguard_HttpOptions.CustomMethod) -> Bool {
     if lhs.kind != rhs.kind {return false}
     if lhs.path != rhs.path {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

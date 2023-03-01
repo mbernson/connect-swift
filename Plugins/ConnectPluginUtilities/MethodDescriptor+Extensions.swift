@@ -15,10 +15,6 @@
 import SwiftProtobufPluginLibrary
 
 extension MethodDescriptor {
-    public var methodPath: String {
-        return "\(self.service.servicePath)/\(self.name)"
-    }
-
     public func name(using options: GeneratorOptions) -> String {
         return options.keepMethodCasing
         ? self.name

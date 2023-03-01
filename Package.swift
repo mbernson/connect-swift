@@ -19,7 +19,7 @@ import PackageDescription
 let package = Package(
     name: "Connect",
     platforms: [
-        .iOS(.v14),
+        .iOS(.v13),
         .macOS(.v10_15),
     ],
     products: [
@@ -105,6 +105,7 @@ let package = Package(
         .target(
             name: "ConnectPluginUtilities",
             dependencies: [
+                "ConnectPluginGeneratedExtensions",
                 .product(name: "SwiftProtobufPluginLibrary", package: "swift-protobuf"),
             ],
             path: "Plugins/ConnectPluginUtilities"
@@ -121,6 +122,7 @@ let package = Package(
             dependencies: [
                 "ConnectPluginGeneratedExtensions",
                 "ConnectPluginUtilities",
+                .product(name: "SwiftProtobuf", package: "swift-protobuf"),
                 .product(name: "SwiftProtobufPluginLibrary", package: "swift-protobuf"),
             ],
             path: "Plugins/ConnectSwiftPlugin"

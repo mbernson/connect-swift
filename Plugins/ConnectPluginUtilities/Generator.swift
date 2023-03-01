@@ -26,7 +26,7 @@ open class Generator {
         return self.printer.content
     }
 
-    public required init(_ descriptor: FileDescriptor, options: GeneratorOptions) {
+    public required init(_ descriptor: FileDescriptor, options: GeneratorOptions) throws {
         self.descriptor = descriptor
         self.options = options
         self.namer = SwiftProtobufNamer(
@@ -45,9 +45,9 @@ open class Generator {
         self.printer.outdent()
     }
 
-    public func indent(printLines: () -> Void) {
+    public func indent(printLines: () throws -> Void) rethrows {
         self.indent()
-        printLines()
+        try printLines()
         self.outdent()
     }
 
