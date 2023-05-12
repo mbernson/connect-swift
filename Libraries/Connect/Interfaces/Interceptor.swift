@@ -14,6 +14,14 @@
 
 import Foundation
 
+public protocol UnaryInterceptor {
+    func onRequest(_ request: HTTPRequest, next: @escaping (HTTPRequest) -> Void)
+
+    func onResponse(_ response: HTTPResponse, next: @escaping (HTTPResponse) -> Void)
+
+    func onMetrics(_ metrics: HTTPMetrics, next: @escaping (HTTPMetrics) -> Void)
+}
+
 /// Interceptors can be registered with clients as a way to observe and/or alter outbound requests
 /// and inbound responses.
 ///
@@ -22,10 +30,8 @@ public protocol Interceptor {
     /// Invoked when a unary call is started. Provides a set of closures that will be called
     /// as the request progresses, allowing the interceptor to alter request/response data.
     ///
-    /// - parameter next: <#UnaryFunction#>
-    ///
     /// - returns: A new set of closures which can be used to read/alter request/response data.
-    func unaryFunction(next: UnaryFunction) -> UnaryFunction
+    func unaryFunction() -> UnaryFunction
 
     /// Invoked when a streaming call is started. Provides a set of closures that will be called
     /// as the stream progresses, allowing the interceptor to alter request/response data.
@@ -35,10 +41,8 @@ public protocol Interceptor {
     /// will contain 1 full message (for Connect and gRPC, this includes the prefix and message
     /// length bytes, followed by the actual message data).
     ///
-    /// - parameter next: <#StreamResult#>
-    ///
     /// - returns: A new set of closures which can be used to read/alter request/response data.
-    func streamFunction(next: StreamFunction) -> StreamFunction
+    func streamFunction() -> StreamFunction
 }
 
 public struct UnaryFunction {

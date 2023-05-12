@@ -15,7 +15,7 @@
 /// Represents a chain of interceptors that is used for a single request/stream,
 /// and orchestrates invoking each of them in the proper order.
 struct InterceptorChain {
-    private let interceptors: [Interceptor]
+    private let interceptors: [UnaryInterceptor]
 
     /// Initialize the interceptor chain.
     ///
@@ -29,6 +29,13 @@ struct InterceptorChain {
         self.interceptors = interceptors.map { initialize in initialize(config) }
     }
 
+    func sendRequest(_ request: HTTPRequest, send: @escaping (HTTPRequest) -> Void) {
+        var next = send
+        for interceptor in self.interceptors.reversed() {
+            next = interceptor.onRequest(request, next: next)
+        }
+    }
+
     /// Create a set of closures configured with all interceptors for a unary API.
     ///
     /// NOTE: Interceptors are invoked in FIFO order for the request path, and in LIFO order for
@@ -40,11 +47,20 @@ struct InterceptorChain {
     ///
     /// - returns: A set of closures that each invoke the chain of interceptors in the above order.
     func unaryFunction(send: UnaryFunction) -> UnaryFunction {
+        let unaryInterceptors = self.interceptors.map { $0.unaryFunction() }
+
+
+
+        var nextRequest = send.requestFunction
+        var nextResponse = send.responseFunction
+        var nextResponseMetrics = send.responseMetricsFunction
+        for interceptor in unaryInterceptors {
+            <#body#>
+        }
         var next = send
         for interceptor in self.interceptors {
             next = UnaryFunction(requestFunction: <#T##(HTTPRequest) -> Void#>, responseFunction: <#T##(HTTPResponse) -> Void#>, responseMetricsFunction: <#T##(HTTPMetrics) -> Void#>)
         }
-        let interceptors = self.interceptors.map { $0.unaryFunction() }
         return UnaryFunction(
             requestFunction: { request in
                 return executeInterceptors(interceptors.map(\.requestFunction), initial: request)
