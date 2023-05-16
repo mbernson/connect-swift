@@ -22,6 +22,8 @@ public struct ProtocolClientConfig {
     public let networkProtocol: NetworkProtocol
     /// Codec to use for serializing requests and deserializing responses.
     public let codec: Codec
+    /// GET configuration to use with the Connect protocol.
+    public let getConfig: GETConfig
     /// Compression settings to use for oubound requests.
     public let requestCompression: RequestCompression?
     /// Compression pools that can be used to decompress responses based on
@@ -47,10 +49,25 @@ public struct ProtocolClientConfig {
         }
     }
 
+    /// Configuration allowing RPCs annotated with `option idempotency_level = NO_SIDE_EFFECTS`
+    /// to be sent as GET requests (instead of POSTs).
+    /// Utilizing GET requests can make it easier to cache in browsers, proxies, and CDNs.
+    /// https://connect.build/docs/protocol#unary-get-request
+    public enum GETConfig {
+        /// Do not send GET requests.
+        case disabled
+        /// Send GET requests for enabled RPCs, as long as the message's length is within the
+        /// specified size limit.
+        case enabledWithFallback(maxMessageBytes: Int = 50_000)
+        /// Send GET requests for enabled RPCs, regardless of message length.
+        case enabled
+    }
+
     public init(
         host: String,
         networkProtocol: NetworkProtocol = .connect,
         codec: Codec = JSONCodec(),
+        getConfig: GETConfig = .disabled,
         requestCompression: RequestCompression? = nil,
         responseCompressionPools: [CompressionPool] = [GzipCompressionPool()],
         interceptors: [(ProtocolClientConfig) -> Interceptor] = []
@@ -58,6 +75,7 @@ public struct ProtocolClientConfig {
         self.host = host
         self.networkProtocol = networkProtocol
         self.codec = codec
+        self.getConfig = getConfig
         self.requestCompression = requestCompression
         self.responseCompressionPools = responseCompressionPools
 

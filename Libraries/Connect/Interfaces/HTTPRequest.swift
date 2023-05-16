@@ -18,6 +18,8 @@ import Foundation
 public struct HTTPRequest: Sendable {
     /// Target URL for the request.
     public let url: URL
+    /// HTTP method for the request (e.g., GET, POST).
+    public let method: String
     /// Value to assign to the `content-type` header.
     public let contentType: String
     /// Additional outbound headers for the request.
@@ -28,9 +30,11 @@ public struct HTTPRequest: Sendable {
     public let trailers: Trailers?
 
     public init(
-        url: URL, contentType: String, headers: Headers, message: Data?, trailers: Trailers?
+        url: URL, method: String, contentType: String,
+        headers: Headers, message: Data?, trailers: Trailers?
     ) {
         self.url = url
+        self.method = method
         self.contentType = contentType
         self.headers = headers
         self.message = message
